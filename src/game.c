@@ -1,5 +1,8 @@
+#define HIGHSCORE_FILE "highscore.txt"
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <ctype.h>
 #include "../include/game.h"
 #include "../include/funcs.h"
@@ -8,7 +11,19 @@
 void playGame(int* board, int size, int scoreToWin)
 {
     int score = 0;      // Current score
-    int best = 0;       // Best score across all games
+    char playerName[50];
+    printf("Enter your name: ");
+    scanf("%49s", playerName);
+
+    char highScoreFile[150];
+    time_t now = time(NULL);
+    struct tm* t = localtime(&now);
+    sprintf(highScoreFile, "highscore_%s_%04d%02d%02d_%02d%02d%02d.txt",
+        playerName,
+        t->tm_year + 1900, t->tm_mon + 1, t->tm_mday,
+        t->tm_hour, t->tm_min, t->tm_sec);
+
+    int best = loadHighScore(highScoreFile);
     char input;         // User input
     int gameStarted = 0; //
 
@@ -17,7 +32,7 @@ void playGame(int* board, int size, int scoreToWin)
 
     // Game loop
     while (1) {
-        printMenu(); // Display menu options
+        printMenu(playerName, best); // Display menu options
 
         input = getUserInput(); // Get user input
 
@@ -63,11 +78,20 @@ void playGame(int* board, int size, int scoreToWin)
             }
 
             if (moveMade) {
-                best = (score > best) ? score : best; // Update best score
+                if (score > best) {
+                    best = score;
+                    saveHighScore(highScoreFile, best); // Save to file
+                }
+
                 if (score >= scoreToWin) //Check for win
                 {
-                    printf("You won %d! - Ending game\n", score);
-                    break;
+                    printf("You reached %d! Do you want to keep playing? (y/n): ", scoreToWin);
+                    char choice;
+                    scanf(" %c", &choice);
+                    if (tolower(choice) == 'n') {
+                        printf("Ending game.\n");
+                        break;
+                    }
                 }
                 addRandomTile((int*)board, size); // Add a new random tile
                 updateBestScore(score, &best);
@@ -123,7 +147,7 @@ void updateBestScore(int currentScore, int* bestScore)
     }
 }
 
-void printMenu() 
+void printMenu(const char* playerName, int best)
 {
     printf("\nPlease choose one of the following options:\n");
     printf("N/n - New Game\n");
@@ -134,4 +158,5 @@ void printMenu()
     printf("E/e - Exit\n");
     printf("\nEnter your move: ");
     printf("\n");
+    printf("Best Score: %d\n", best);
 }

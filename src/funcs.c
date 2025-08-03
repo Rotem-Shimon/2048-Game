@@ -332,3 +332,21 @@ int checkLoss(int* board, int size) {
 	// If no empty tiles and no valid moves exist
 	return 1; // Game is over
 }
+
+// Load high score from file, return 0 if file doesn't exist
+int loadHighScore(const char* filename) {
+	FILE* file = fopen(filename, "r");
+	if (!file) return 0;  // No file yet
+	int highScore;
+	fscanf(file, "%d", &highScore);
+	fclose(file);
+	return highScore;
+}
+
+// Save high score to file
+void saveHighScore(const char* filename, int score) {
+	FILE* file = fopen(filename, "w");
+	if (!file) return;
+	fprintf(file, "%d", score);
+	fclose(file);
+}
