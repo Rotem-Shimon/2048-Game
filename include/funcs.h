@@ -19,4 +19,8 @@ int moveDown(int* board, int size, int* score);
 
 int checkLoss(int* board, int size);
 
+int loadHighScore(const char* filename);
+void saveHighScore(const char* filename, int score);
+
+
 #endif // FUNCS_H

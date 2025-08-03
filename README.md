@@ -9,7 +9,8 @@ The project is organized with a clean structure and includes support for **Visua
 - Full implementation of the **2048 game logic** in C.  
 - Clear **modular structure** – separate header and source files (`.h` / `.c`).  
 - **Configurable board size** and **winning score**.  
-- **Score tracking** for current and best scores.  
+- **Per-user High Score system** – each player has their own high score file, named with their username and timestamp.  
+- **Player identification in menu** – the game displays the current player's name alongside their best score.  
 - Designed to run on **Windows** using Visual Studio.  
 
 ## Project Structure
@@ -32,6 +33,7 @@ The project is organized with a clean structure and includes support for **Visua
    ```
 2. Open `2048-Game.sln` in **Visual Studio**.  
 3. Build and run the project (press **F5**).  
+4. When prompted, enter your **username** – the game will create a personalized high score file for you.
 
 ## Future Improvements
 - Adding **graphical interface** (currently console-based).  
