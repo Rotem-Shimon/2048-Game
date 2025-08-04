@@ -1,6 +1,13 @@
-
 #ifndef FUNCS_H
 #define FUNCS_H
+
+#include <windows.h>  // For clearing console (Windows)
+
+void saveLeaderboard(const char* filename, const char* name, int score);
+void printLeaderboard(const char* filename);
+
+void clearScreen();
+const char* getColor(int value);
 
 void initializeBoard(int* board, int size);
 void printBoard(int* board, int size, int score, int best);
