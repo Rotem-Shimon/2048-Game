@@ -4,7 +4,7 @@ This version is designed to be **clean, user-friendly, and visually clear**, mak
 
 ![Game Screenshot](./assets/screenshot.png)
 
-## Features
+## Features 
 - **Color-coded board** with clear redraw on every move.  
 - **Main menu**: Start Game, View Leaderboard, Exit.  
 - **Leaderboard**: Saves top 10 scores with **player name** and **date**.  
