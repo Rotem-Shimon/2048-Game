@@ -1,48 +1,88 @@
-# 2048 Game – Enhanced Version
-An enhanced version of the classic **2048 game** written in **C**, now with a polished interface and new features.  
-This version is designed to be **clean, user-friendly, and visually clear**, making it stand out as a solid console project.
+# 🎮 2048 Game – Enhanced C Version
 
-![Game Screenshot](./assets/screenshot.png)
+![C](https://img.shields.io/badge/Language-C-blue?logo=c)
+![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-lightgrey)
+![Visual Studio](https://img.shields.io/badge/IDE-Visual%20Studio-purple?logo=visualstudio)
 
-## Features 
-- **Color-coded board** with clear redraw on every move.  
-- **Main menu**: Start Game, View Leaderboard, Exit.  
-- **Leaderboard**: Saves top 10 scores with **player name** and **date**.  
-- **In-game controls hint** for a smoother experience.  
-- **Improved screen handling** – the board refreshes in place instead of scrolling.  
+An **enhanced version of the classic 2048 game** written in **C**, with a polished interface, leaderboard tracking, and a user-friendly console experience.  
+Designed to demonstrate clean C programming, file handling, and simple UI/UX for console applications.
 
-## Controls
+---
+
+## ✨ Features
+- **Color-coded board** with smooth in-place refresh on every move.
+- **Main menu**: Start Game, View Leaderboard, Exit.
+- **Leaderboard**: Top 10 scores saved with **player names** and **timestamps**.
+- **In-game controls hint** for better user experience.
+- **Cross-platform support**: Runs on Windows (Visual Studio) and Linux (via Makefile).
+
+---
+
+## 📸 Screenshots
+### Game Board  
+![Game Screenshot](assets/screenshot.png)  
+
+### Leaderboard  
+![Leaderboard Screenshot](assets/leaderboard.png)  
+
+*(Coming soon: **GIF** showing gameplay in action!)*
+
+---
+
+## 🎮 Controls
 - **R** – Move Right  
 - **L** – Move Left  
 - **U** – Move Up  
 - **D** – Move Down  
 - **E** – Exit  
 
-## Leaderboard
-Track the **top 10 scores** with player names and dates:  
+---
 
-![Leaderboard Screenshot](./assets/leaderboard.png)
+## 🛠️ Tech Stack
+- **Language:** C  
+- **Platform:** Windows Console App (Visual Studio), Makefile for Linux  
+- **File Handling:** Highscore and leaderboard persistence  
+- **Assets:** Screenshots & data files  
 
-## How to Build
-### Windows (Visual Studio)
-1. Open the solution `2048-Game.sln` in **Visual Studio**.  
-2. Build and run the project (default configuration: Debug/x64).  
+---
 
-### Linux/Mac (Makefile)
-make
-./game
+## 📂 Project Structure
+```
+2048-Game/
+├─ src/                # Source code (.c files)
+├─ include/            # Header files (.h)
+├─ assets/             # Screenshots, gameplay GIF & highscore data
+│   ├─ screenshot.png
+│   ├─ leaderboard.png
+│   ├─ gameplay.gif
+│   ├─ highscore.txt
+│   ├─ leaderboard.txt
+│   └─ other highscore_* files
+├─ Makefile            # Build script for Linux
+├─ 2048-Game.sln       # Visual Studio solution
+├─ 2048-Game.vcxproj   # Visual Studio project file
+└─ README.md           # Project documentation
+```
 
-## Project Structure
-include/           # Header files
-src/               # Source files
-2048-Game.sln      # Visual Studio solution
-leaderboard.txt    # Stores top scores
-highscore.txt      # Stores highest score
+---
 
-## Future Improvements
-- Highlighting when achieving a **New High Score**.  
-- Preventing duplicate leaderboard entries for the same player/score.  
-- Optional **export of leaderboard** to CSV for analysis.  
+## 🚀 How to Build & Run
 
-## License
-This project is licensed under the [MIT License](LICENSE).
+### **Windows (Visual Studio)**
+1. Open `2048-Game.sln` in **Visual Studio**.
+2. Build and run the project (Ctrl + F5).
+
+### **Linux**
+1. Open a terminal in the project folder.
+2. Run:
+   ```bash
+   make
+   ./game
+   ```
+
+---
+
+## 📜 Author
+**Rotem Shimon**  
+2nd-year Computer Science student at Afeka Academic College of Engineering.  
+Passionate about system programming and building fun, interactive projects.
