@@ -1,56 +1,48 @@
-# 2048 Game – C Project
+# 2048 Game – Enhanced Version
+An enhanced version of the classic **2048 game** written in **C**, now with a polished interface and new features.  
+This version is designed to be **clean, user-friendly, and visually clear**, making it stand out as a solid console project.
 
-![Gameplay](./assets/2048.PNG)
-
-This project is an implementation of the classic **2048 game** written in **C**, developed as part of my coursework at **Afeka College (2024)**.  
-The project is organized with a clean structure and includes support for **Visual Studio** for easy building and debugging.
+![Game Screenshot](./assets/screenshot.png)
 
 ## Features
-- Full implementation of the **2048 game logic** in C.  
-- Clear **modular structure** – separate header and source files (`.h` / `.c`).  
-- **Configurable board size** and **winning score**.  
-- **Per-user High Score system** – each player has their own high score file, named with their username and timestamp.  
-- **Player identification in menu** – the game displays the current player's name alongside their best score.  
-- Designed to run on **Windows** using Visual Studio, with **cross-platform support** via Makefile.  
+- **Color-coded board** with clear redraw on every move.  
+- **Main menu**: Start Game, View Leaderboard, Exit.  
+- **Leaderboard**: Saves top 10 scores with **player name** and **date**.  
+- **In-game controls hint** for a smoother experience.  
+- **Improved screen handling** – the board refreshes in place instead of scrolling.  
 
-## Project Structure
-```
-.
-├── include/                      # Header files
-├── src/                          # Source files
-├── 2048-Game.sln                 # Visual Studio solution file
-├── 2048-Game.vcxproj             # Visual Studio project file
-├── 2048-Game.vcxproj.filters     # Visual Studio filters for organizing code
-├── Makefile                      # Build script for Linux/Unix (make & ./game)
-├── LICENSE                       # MIT license – allows use and modification
-├── .gitignore                    # Files ignored by Git
-├── .gitattributes                # Git configuration (e.g., line endings)
-└── README.md                     # Project description
-```
+## Controls
+- **R** – Move Right  
+- **L** – Move Left  
+- **U** – Move Up  
+- **D** – Move Down  
+- **E** – Exit  
 
-## How to Run
+## Leaderboard
+Track the **top 10 scores** with player names and dates:  
 
-### Option 1: Visual Studio (Windows)
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/Rotem-Shimon/2048-Game.git
-   ```
-2. Open `2048-Game.sln` in **Visual Studio**.  
-3. Build and run the project (press **F5**).  
-4. When prompted, enter your **username** – the game will create a personalized high score file for you.
+![Leaderboard Screenshot](./assets/leaderboard.png)
 
-### Option 2: Compile with Makefile (Linux/Unix)
-For non-Windows environments or when Visual Studio is not available:
-```bash
+## How to Build
+### Windows (Visual Studio)
+1. Open the solution `2048-Game.sln` in **Visual Studio**.  
+2. Build and run the project (default configuration: Debug/x64).  
+
+### Linux/Mac (Makefile)
 make
 ./game
-```
-The included **Makefile** simplifies building and running the game on Unix-based systems.
+
+## Project Structure
+include/           # Header files
+src/               # Source files
+2048-Game.sln      # Visual Studio solution
+leaderboard.txt    # Stores top scores
+highscore.txt      # Stores highest score
 
 ## Future Improvements
-- Adding **graphical interface** (currently console-based).  
-- Saving and loading **game progress** between sessions.  
+- Highlighting when achieving a **New High Score**.  
+- Preventing duplicate leaderboard entries for the same player/score.  
+- Optional **export of leaderboard** to CSV for analysis.  
 
 ## License
-This project is released under the **MIT License** – feel free to use, modify, and share it.  
-See the [LICENSE](./LICENSE) file for details.
+This project is licensed under the [MIT License](LICENSE).

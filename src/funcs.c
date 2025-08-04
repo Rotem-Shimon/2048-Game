@@ -1,8 +1,40 @@
+﻿#define MAX_ENTRIES 10
 
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include "../include/funcs.h"
+
+typedef struct {
+	char name[50];
+	int score;
+	char date[20];
+} Entry;
+
+// Clear console screen
+void clearScreen() {
+	system("cls"); // Windows
+	// system("clear"); // Uncomment for Linux/Mac
+}
+
+// Get color based on tile value
+const char* getColor(int value) {
+	switch (value) {
+	case 2: return "\033[1;37m";   // White
+	case 4: return "\033[1;36m";   // Cyan
+	case 8: return "\033[1;34m";   // Blue
+	case 16: return "\033[1;32m";  // Green
+	case 32: return "\033[1;33m";  // Yellow
+	case 64: return "\033[1;31m";  // Red
+	case 128: return "\033[0;35m"; // Magenta
+	case 256: return "\033[0;36m"; // Dark Cyan
+	case 512: return "\033[0;34m"; // Dark Blue
+	case 1024: return "\033[0;32m";// Dark Green
+	case 2048: return "\033[1;33m";// Gold
+	default: return "\033[1;35m";  // Purple for >2048
+	}
+}
 
 void initializeBoard(int* board, int size) {
 	for (int i = 0; i < size * size; ++i) {
@@ -11,41 +43,23 @@ void initializeBoard(int* board, int size) {
 }
 
 void printBoard(int* board, int size, int score, int best) {
-	int width = 6; // Fixed width for each cell, ensures alignment
+	clearScreen();
+	printf("Score: %d   Best: %d\n\n", score, best);
 
-	// Print current score and best score
-	printf("Score: %d   Best: %d\n", score, best);
-
+	// Top border
+	printf("+-------+-------+-------+-------+\n");
 	for (int row = 0; row < size; ++row) {
-		// Print the top border for the current row
-		for (int col = 0; col < size; ++col) {
-			for (int w = 0; w < width; ++w) {
-				printf("-");
-			}
-		}
-		printf("-\n");
-
-		// Print the values of the current row
 		printf("|");
 		for (int col = 0; col < size; ++col) {
-			int value = *(board++); // Access the current value using pointer arithmetic
-			if (value == 0) {
-				printf("%*s|", width - 1, ""); // Print empty space for 0
-			}
-			else {
-				printf("%*d|", width - 1, value); // Print the value with proper spacing
-			}
+			int value = *(board + row * size + col);
+			if (value == 0)
+				printf("       |");
+			else
+				printf(" %s%-5d\033[0m |", getColor(value), value);
 		}
-		printf("\n");
+		printf("\n+-------+-------+-------+-------+\n");
 	}
-
-	// Print the bottom border for the last row
-	for (int col = 0; col < size; ++col) {
-		for (int w = 0; w < width; ++w) {
-			printf("-");
-		}
-	}
-	printf("-\n");
+	printf("\nControls: R=Right | L=Left | U=Up | D=Down | E=Exit\n"); // Short instructions under the board 
 }
 
 void addRandomTile(int* board, int size) {
@@ -348,5 +362,81 @@ void saveHighScore(const char* filename, int score) {
 	FILE* file = fopen(filename, "w");
 	if (!file) return;
 	fprintf(file, "%d", score);
+	fclose(file);
+}
+
+void saveLeaderboard(const char* filename, const char* name, int score) {
+	Entry entries[MAX_ENTRIES];
+	int count = 0;
+
+	FILE* file = fopen(filename, "r");
+	if (file) {
+		while (fscanf(file, "%49s %d %19s", entries[count].name, &entries[count].score, entries[count].date) == 3) {
+			count++;
+			if (count >= MAX_ENTRIES) break;
+		}
+		fclose(file);
+	}
+
+	// Get current date
+	time_t now = time(NULL);
+	struct tm* t = localtime(&now);
+	char date[20];
+	strftime(date, sizeof(date), "%Y-%m-%d", t);
+
+	// Add new entry
+	if (count < MAX_ENTRIES) {
+		strcpy(entries[count].name, name);
+		entries[count].score = score;
+		strcpy(entries[count].date, date);
+		count++;
+	}
+	else {
+		// Replace lowest score if higher
+		int minIndex = 0;
+		for (int i = 1; i < MAX_ENTRIES; i++) {
+			if (entries[i].score < entries[minIndex].score) minIndex = i;
+		}
+		if (score > entries[minIndex].score) {
+			strcpy(entries[minIndex].name, name);
+			entries[minIndex].score = score;
+			strcpy(entries[minIndex].date, date);
+		}
+	}
+
+	// Sort by score
+	for (int i = 0; i < count - 1; i++) {
+		for (int j = i + 1; j < count; j++) {
+			if (entries[j].score > entries[i].score) {
+				Entry temp = entries[i];
+				entries[i] = entries[j];
+				entries[j] = temp;
+			}
+		}
+	}
+
+	// Write back
+	file = fopen(filename, "w");
+	if (!file) return;
+	for (int i = 0; i < count && i < MAX_ENTRIES; i++) {
+		fprintf(file, "%s %d %s\n", entries[i].name, entries[i].score, entries[i].date);
+	}
+	fclose(file);
+}
+
+void printLeaderboard(const char* filename) {
+	Entry entry;
+	FILE* file = fopen(filename, "r");
+	if (!file) {
+		printf("\nNo leaderboard data yet.\n");
+		return;
+	}
+
+	printf("\n==== Leaderboard ====\n");
+	printf("%-15s %-10s %-12s\n", "Name", "Score", "Date");
+	printf("-------------------------------\n");
+	while (fscanf(file, "%49s %d %19s", entry.name, &entry.score, entry.date) == 3) {
+		printf("%-15s %-10d %-12s\n", entry.name, entry.score, entry.date);
+	}
 	fclose(file);
 }
